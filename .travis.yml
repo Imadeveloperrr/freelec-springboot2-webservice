@@ -9,6 +9,14 @@ branches:
 before_install:
   - chmod +x gradlew
 
+# Travis CI 서버의 Home
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+
+script: "./gradlew clean build"
+
 before_deploy:
   - zip -r freelec-springboot2-webservice *
   - mkdir -p deploy
@@ -35,15 +43,6 @@ deploy:
     deployment_group: freelec-springboot2-webservice-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
     region: ap-northeast-2
     wait-until-deployed: true
-
-
-# Travis CI 서버의 Home
-cache:
-  directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.gradle'
-
-script: "./gradlew clean build"
 
 #CI 실행 완료 시 메일로 알람
 notifications:
